@@ -175,7 +175,6 @@ public:
 class Deal_Coin : public State<Miner>
 {
 private:
-	bool isBuy;
 	Deal_Coin() {}
 
 	//copy ctor and assignment should be private

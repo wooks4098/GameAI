@@ -52,7 +52,12 @@ bool GoldCoinManagerGlobalState::OnMessage(GoldCoinManager* CoinManager, const T
 
 		cout << "\n" << GetNameOfEntity(CoinManager->ID()) <<
 			"손님 좋은 상품이 있습니다. 돈이 복사가 된다구요!!";
-
+		Dispatch->DispatchMessage(1.5,                  //time delay
+			CoinManager->ID(),           //sender ID
+			ent_Miner_Bob,           //receiver ID
+			Msg_Deal,        //msg  Msg_Deal
+			CoinManager->Return_Coin_Pirce(),
+			NO_ADDITIONAL_INFO);
 		CoinManager->GetFSM()->ChangeState(SellCoin::Instance());
 	}
 
@@ -160,17 +165,14 @@ void SellCoin::Enter(GoldCoinManager* CoinManager)
 	//if not already cooking put the stew in the oven
 	if (!CoinManager->Cooking())
 	{
-		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 현재 1골드 코인은 2금덩이입니다.";
+		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+
+		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << 
+			": 현재 1골드 코인은 "+ std::to_string(CoinManager->Return_Coin_Pirce())+ "금덩이 입니다. ";
 
 		//send a delayed message myself so that I know when to take the stew
-		//out of the oven
-		Dispatch->DispatchMessage(1.5,                  //time delay
-			CoinManager->ID(),           //sender ID
-			CoinManager->ID(),           //receiver ID
-			Msg_StewReady,        //msg
-			NO_ADDITIONAL_INFO);
+		
 
-		CoinManager->SetCooking(true);
 	}
 }
 
@@ -184,7 +186,7 @@ void SellCoin::Exit(GoldCoinManager* CoinManager)
 {
 	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
-	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 스튜를 식탁에 둔다";
+	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 거래 감사합니다";
 }
 
 
@@ -194,24 +196,30 @@ bool SellCoin::OnMessage(GoldCoinManager* CoinManager, const Telegram& msg)
 
 	switch (msg.Msg)
 	{
-	case Msg_StewReady:
+	case Msg_Deal_Success:
 	{
 		cout << "\nMessage received by " << GetNameOfEntity(CoinManager->ID()) <<
 			" at time: " << Clock->GetCurrentTime();
 
 		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": StewReady! Lets eat";
+		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 거래 감사합니다";
 
-		//let hubby know the stew is ready
-		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
-			CoinManager->ID(),
-			ent_Miner_Bob,
-			Msg_StewReady,
-			NO_ADDITIONAL_INFO);
 
-		CoinManager->SetCooking(false);
 
 		CoinManager->GetFSM()->ChangeState(DoBankWork::Instance());
+	}
+	case Msg_Deal_Fail:
+	{
+		cout << "\nMessage received by " << GetNameOfEntity(CoinManager->ID()) <<
+			" at time: " << Clock->GetCurrentTime();
+
+		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 다";
+
+
+
+		CoinManager->GetFSM()->ChangeState(DoBankWork::Instance());
+
 	}
 
 	return true;

@@ -54,6 +54,8 @@ private:
   //the higher the value, the more tired the miner
   int                   m_iFatigue;
 
+  int Coin_Pirce;
+
 public:
 
   Miner(int id):m_Location(shack),
@@ -99,11 +101,14 @@ public:
   void          IncreaseFatigue(){m_iFatigue += 1;}
 
   int           Wealth()const{return m_iMoneyInBank;}
-  void          SetWealth(int val){m_iMoneyInBank = val;}
+  void          SetWealth(int val){m_iMoneyInBank += val;}
   void          AddToWealth(int val);
 
   bool          Thirsty()const; 
   void          BuyAndDrinkAWhiskey(){m_iThirst = 0; m_iMoneyInBank-=2;}
+
+  void SetCoin_Pirce(int _Price) { Coin_Pirce = _Price; }
+  int GetCoin_Pirce() { return Coin_Pirce; }
 
 };
 

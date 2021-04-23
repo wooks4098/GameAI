@@ -35,6 +35,7 @@ struct Telegram
   //any additional information that may accompany the message
   void*        ExtraInfo;
 
+  int Coin;
 
   Telegram():DispatchTime(-1),
                   Sender(-1),
@@ -52,6 +53,18 @@ struct Telegram
                                Receiver(receiver),
                                Msg(msg),
                                ExtraInfo(info)
+  {}
+  Telegram(double time,
+	  int    sender,
+	  int    receiver,
+	  int    msg,
+	  int	coin,
+	  void*  info = NULL) : DispatchTime(time),
+	  Sender(sender),
+	  Receiver(receiver),
+	  Msg(msg),
+	  Coin(coin),
+	  ExtraInfo(info)
   {}
  
 };

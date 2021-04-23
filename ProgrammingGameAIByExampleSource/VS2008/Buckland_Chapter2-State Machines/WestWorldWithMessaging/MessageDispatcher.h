@@ -60,6 +60,13 @@ public:
                        int    receiver,
                        int    msg,
                        void*  ExtraInfo);
+  void DispatchMessage(double  delay,
+	  int    sender,
+	  int    receiver,
+	  int    msg,
+	  int	coin,
+	  void*  ExtraInfo);
+ 
 
   //send out any delayed messages. This method is called each time through   
   //the main game loop.
