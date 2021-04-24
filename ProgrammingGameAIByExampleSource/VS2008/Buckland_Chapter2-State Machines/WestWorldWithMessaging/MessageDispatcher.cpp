@@ -122,7 +122,7 @@ void MessageDispatcher::DispatchMessage(double  delay,
 	}
 
 	//create the telegram
-	Telegram telegram(0, sender, receiver, msg, ExtraInfo);
+	Telegram telegram(0, sender, receiver, msg, coin, ExtraInfo);
 
 	//if there is no delay, route telegram immediately                       
 	if (delay <= 0.0f)

@@ -214,7 +214,7 @@ bool SellCoin::OnMessage(GoldCoinManager* CoinManager, const Telegram& msg)
 			" at time: " << Clock->GetCurrentTime();
 
 		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 다";
+		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 시간 내주셔서 감사합니다";
 
 
 

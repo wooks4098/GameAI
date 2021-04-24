@@ -60,7 +60,7 @@ public:
 class VisitBankAndDepositGold : public State<Miner>
 {
 private:
-  
+	bool end_deal = false;
   VisitBankAndDepositGold(){}
 
   //copy ctor and assignment should be private
