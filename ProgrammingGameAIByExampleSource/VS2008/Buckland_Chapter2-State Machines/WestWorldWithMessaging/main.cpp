@@ -38,7 +38,7 @@ int main()
   EntityMgr->RegisterEntity(CoinManager);
 
   //run Bob and Elsa through a few Update calls
-  for (int i=0; i<15; ++i)
+  for (int i=0; i<30; ++i)
   { 
     Bob->Update();
     //Elsa->Update();

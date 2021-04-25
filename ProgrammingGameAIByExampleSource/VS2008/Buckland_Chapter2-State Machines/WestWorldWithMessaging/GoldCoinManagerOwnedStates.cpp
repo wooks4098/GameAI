@@ -48,7 +48,7 @@ bool GoldCoinManagerGlobalState::OnMessage(GoldCoinManager* CoinManager, const T
 		cout << "\nMessage handled by " << GetNameOfEntity(CoinManager->ID()) << " at time: "
 			<< Clock->GetCurrentTime();
 
-		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 
 		cout << "\n" << GetNameOfEntity(CoinManager->ID()) <<
 			"손님 좋은 상품이 있습니다. 돈이 복사가 된다구요!!";
@@ -80,6 +80,8 @@ DoBankWork* DoBankWork::Instance()
 
 void DoBankWork::Enter(GoldCoinManager* CoinManager)
 {
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+
 	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 코인 변동률을 확인할 시간이다";
 }
 
@@ -87,7 +89,7 @@ void DoBankWork::Enter(GoldCoinManager* CoinManager)
 void DoBankWork::Execute(GoldCoinManager* CoinManager)
 {
 	int random = RandInt(0, 9);
-
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	if (random >= 7) //코인 상승
 	{
 		CoinManager->Set_Coin_Pirce(+1);
@@ -127,12 +129,14 @@ DrinkCoffe* DrinkCoffe::Instance()
 
 void DrinkCoffe::Enter(GoldCoinManager* CoinManager)
 {
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ":  카페로 간다. 아아 주세요";
 }
 
 
 void DrinkCoffe::Execute(GoldCoinManager* CoinManager)
 {
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 아! 시원하다!";
 
 	CoinManager->GetFSM()->RevertToPreviousState();
@@ -140,6 +144,7 @@ void DrinkCoffe::Execute(GoldCoinManager* CoinManager)
 
 void DrinkCoffe::Exit(GoldCoinManager* CoinManager)
 {
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ":카페에서 나온다";
 }
 
@@ -162,11 +167,11 @@ SellCoin* SellCoin::Instance()
 
 void SellCoin::Enter(GoldCoinManager* CoinManager)
 {
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	//if not already cooking put the stew in the oven
 	if (!CoinManager->Cooking())
 	{
-		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-
+		SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << 
 			": 현재 1골드 코인은 "+ std::to_string(CoinManager->Return_Coin_Pirce())+ "금덩이 입니다. ";
 
@@ -179,13 +184,13 @@ void SellCoin::Enter(GoldCoinManager* CoinManager)
 
 void SellCoin::Execute(GoldCoinManager* CoinManager)
 {
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 고객의 결정을 기다린다";
 }
 
 void SellCoin::Exit(GoldCoinManager* CoinManager)
 {
-	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
-
+	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 거래 감사합니다";
 }
 
@@ -201,7 +206,7 @@ bool SellCoin::OnMessage(GoldCoinManager* CoinManager, const Telegram& msg)
 		cout << "\nMessage received by " << GetNameOfEntity(CoinManager->ID()) <<
 			" at time: " << Clock->GetCurrentTime();
 
-		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 거래 감사합니다";
 
 
@@ -213,7 +218,7 @@ bool SellCoin::OnMessage(GoldCoinManager* CoinManager, const Telegram& msg)
 		cout << "\nMessage received by " << GetNameOfEntity(CoinManager->ID()) <<
 			" at time: " << Clock->GetCurrentTime();
 
-		SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+		SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 시간 내주셔서 감사합니다";
 
 

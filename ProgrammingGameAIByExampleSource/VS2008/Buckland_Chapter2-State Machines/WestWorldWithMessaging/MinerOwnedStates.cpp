@@ -34,6 +34,7 @@ void EnterMineAndDigForNugget::Enter(Miner* pMiner)
 	//change location to the gold mine
 	if (pMiner->Location() != goldmine)
 	{
+		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "금광으로 향한다";
 
 		pMiner->ChangeLocation(goldmine);
@@ -50,7 +51,7 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 	pMiner->AddToGoldCarried(1);
 
 	pMiner->IncreaseFatigue();
-
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "금덩이를 집어든다";
 
 	//if enough gold mined, go and put it in the bank
@@ -76,6 +77,7 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 
 void EnterMineAndDigForNugget::Exit(Miner* pMiner)
 {
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
 		<< "주머니에 금덩이를 가득 채우고 금광을 떠난다";
 	
@@ -122,6 +124,7 @@ void VisitBankAndDepositGold::Enter(Miner* pMiner)
 	//on entry the miner makes sure he is located at the bank
 	if (pMiner->Location() != bank)
 	{
+		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "은행으로 간다.";
 
 		pMiner->ChangeLocation(bank);
@@ -142,7 +145,7 @@ void VisitBankAndDepositGold::Execute(Miner* pMiner)
 		pMiner->AddToWealth(pMiner->GoldCarried());
 
 		pMiner->SetGoldCarried(0);
-
+		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
 			<< "금을 저장한다. 현재 금의 저축량: " << pMiner->Wealth();
 
@@ -150,13 +153,14 @@ void VisitBankAndDepositGold::Execute(Miner* pMiner)
 		{
 			cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
 				<< "우후! 이제 충분히 부자가 되었다. 나의 귀여운 아내에게로 돌아가자.";
-
+			end_deal = false;
 			pMiner->GetFSM()->ChangeState(GoHomeAndSleepTilRested::Instance());
 		}
 
 		//otherwise get more gold
 		else
 		{
+			end_deal = false;
 			pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
 		}
 	}
@@ -166,7 +170,9 @@ void VisitBankAndDepositGold::Execute(Miner* pMiner)
 
 void VisitBankAndDepositGold::Exit(Miner* pMiner)
 {
-	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "은행을 떠난다";
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
+	if (!end_deal)
+		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "은행을 떠난다";
 }
 
 
@@ -209,6 +215,7 @@ void GoHomeAndSleepTilRested::Enter(Miner* pMiner)
 {
 	if (pMiner->Location() != shack)
 	{
+		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "집으로 걸어간다";
 
 		pMiner->ChangeLocation(shack);
@@ -227,6 +234,7 @@ void GoHomeAndSleepTilRested::Execute(Miner* pMiner)
 	//if miner is not fatigued start to dig for nuggets again.
 	if (!pMiner->Fatigued())
 	{
+		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": "
 			<< "모든 피로가 사라졌다. 금을 찾으러 갈 시간이다";
 
@@ -254,7 +262,7 @@ bool GoHomeAndSleepTilRested::OnMessage(Miner* pMiner, const Telegram& msg)
 	switch (msg.Msg)
 	{
 	case Msg_StewReady:
-
+		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID())
 			<< " at time: " << Clock->GetCurrentTime();
 
@@ -288,7 +296,7 @@ void QuenchThirst::Enter(Miner* pMiner)
 	if (pMiner->Location() != saloon)
 	{
 		pMiner->ChangeLocation(saloon);
-
+		SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "목이 마르군, 술집으로 걸어간다";
 	}
 }
@@ -296,7 +304,7 @@ void QuenchThirst::Enter(Miner* pMiner)
 void QuenchThirst::Execute(Miner* pMiner)
 {
 	pMiner->BuyAndDrinkAWhiskey();
-
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "아주 좋은 술이야.";
 
 	pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());
@@ -305,6 +313,7 @@ void QuenchThirst::Execute(Miner* pMiner)
 
 void QuenchThirst::Exit(Miner* pMiner)
 {
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "술집을 떠난다, 기분도 좋다";
 }
 
@@ -330,11 +339,13 @@ EatStew* EatStew::Instance()
 
 void EatStew::Enter(Miner* pMiner)
 {
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "냄새가 아주 좋아 Elsa!";
 }
 
 void EatStew::Execute(Miner* pMiner)
 {
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "맛도 정말 좋군!";
 
 	pMiner->GetFSM()->RevertToPreviousState();
@@ -342,6 +353,7 @@ void EatStew::Execute(Miner* pMiner)
 
 void EatStew::Exit(Miner* pMiner)
 {
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "고마워 여보. 하던 일을 다시 하는 것이 좋겠군.";
 }
 
@@ -368,12 +380,13 @@ Deal_Coin* Deal_Coin::Instance()
 
 void Deal_Coin::Enter(Miner* pMiner)
 {
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "돈이 복사가 된다고요??";
 }
 
 void Deal_Coin::Execute(Miner* pMiner)
 {
-
+	SetTextColor(FOREGROUND_RED | FOREGROUND_INTENSITY);
 	/*cout << "\n" << GetNameOfEntity(pMiner->ID())
 		<< ": 코인이라 흐음...";*/
 
@@ -390,7 +403,7 @@ void Deal_Coin::Execute(Miner* pMiner)
 	}
 	else
 	{
-		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": 손절합니다 ";
+		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": 돈이 부족하군요 손절합니다 ";
 		//딜러한테 거래 안한다는 메시지 전송
 		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
 			pMiner->ID(),        //ID of sender
