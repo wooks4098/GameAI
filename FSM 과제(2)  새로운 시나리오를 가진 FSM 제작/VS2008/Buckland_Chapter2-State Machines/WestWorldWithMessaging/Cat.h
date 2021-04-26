@@ -25,8 +25,8 @@ public:
 	{
 		//set up the state machine
 		m_pStateMachine = new StateMachine<Cat>(this);
-		m_pStateMachine->SetCurrentState(DoWork::Instance());
-		m_pStateMachine->SetGlobalState(Cat_MasterGlobalState::Instance());
+		m_pStateMachine->SetCurrentState(Bread_posture::Instance());
+		m_pStateMachine->SetGlobalState(CatGlobalState::Instance());
 	}
 
 	~Cat() { delete m_pStateMachine; }

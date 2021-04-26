@@ -58,18 +58,28 @@ DoWork* DoWork::Instance()
 
 void DoWork::Enter(Cat_Master* catMaster)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-	
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "\n" << GetNameOfEntity(catMaster->ID()) <<
+		" : ÀÏÀ» ÇØº¼±î?";
 }
 
 void DoWork::Execute(Cat_Master* catMaster)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);	
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);	
+	cout << "\n" << GetNameOfEntity(catMaster->ID()) <<
+		" : ¿µÂ÷ ¿µÂ÷";
+	int random = rand() % 10;
+	if (random <= 1)
+	{
+		catMaster->GetFSM()->ChangeState(Feeding::Instance());
+	}
 }
 
 void DoWork::Exit(Cat_Master* catMaster)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "\n" << GetNameOfEntity(catMaster->ID()) <<
+		" : ÈÄ.. Èûµé´Ù ±×¸¸ÇØ¾ßÁö";
 	
 }
 
@@ -78,7 +88,14 @@ bool DoWork::OnMessage(Cat_Master* catMaster, const Telegram& msg)
 	SetTextColor(BACKGROUND_RED | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);
 	switch (msg.Msg)
 	{
-	
+	case Msg_Break:
+	{
+		cout << "\nMessage handled by " << GetNameOfEntity(catMaster->ID()) << " at time: "
+			<< Clock->GetCurrentTime();
+
+
+		catMaster->GetFSM()->ChangeState(Cleaning::Instance());
+	}
 	return true;
 
 	}//end switch
@@ -97,18 +114,28 @@ Feeding* Feeding::Instance()
 
 void Feeding::Enter(Cat_Master* catMaster)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "\n" << GetNameOfEntity(catMaster->ID()) <<
+		" : Ãò¸£¸¦ ÁÙ±î?";
 }
 
 void Feeding::Execute(Cat_Master* catMaster)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "\n" << GetNameOfEntity(catMaster->ID()) <<
+		" : Ãò¸£ ¸ÔÀÚ";
+	Dispatch->DispatchMessage(0.1,                  //time delay
+		catMaster->ID(),           //sender ID
+		ent_Cat,           //receiver ID
+		Msg_Eat,        //msg  Msg_Deal
+		NO_ADDITIONAL_INFO);
+	catMaster->GetFSM()->ChangeState(DoWork::Instance());
+
 }
 
 void Feeding::Exit(Cat_Master* catMaster)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 
 }
 
@@ -136,18 +163,25 @@ Cleaning* Cleaning::Instance()
 
 void Cleaning::Enter(Cat_Master* catMaster)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "\n" << GetNameOfEntity(catMaster->ID()) <<
+		" : ÀÌ°Ô ¹«½¼ÀÏÀÌ¾ß";
 
 }
 
 void Cleaning::Execute(Cat_Master* catMaster)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "\n" << GetNameOfEntity(catMaster->ID()) <<
+		" : ¾îÈÞ ¾îÈÞ";
+	catMaster->GetFSM()->ChangeState(DoWork::Instance());
 }
 
 void Cleaning::Exit(Cat_Master* catMaster)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
+	cout << "\n" << GetNameOfEntity(catMaster->ID()) <<
+		" : ´ÙÄ¡¿ü´Ù!!!";
 
 }
 

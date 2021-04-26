@@ -10,8 +10,9 @@ enum
 	ent_Elsa,
 
 	ent_Gold_Coin_Manager,
-	ent_Cat_Master,
+
 	ent_Cat,
+	ent_Cat_Master,
 };
 
 inline std::string GetNameOfEntity(int n)

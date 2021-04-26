@@ -32,12 +32,6 @@ public:
 class DoWork : public State< Cat_Master>
 {
 private:
-	enum Coin_Fluctuation_rate
-	{
-		fall,
-		up,
-		keep
-	};
 	DoWork() {}
 
 	//copy ctor and assignment should be private
@@ -59,16 +53,10 @@ public:
 };
 #pragma endregion
 
-#pragma region π‰¡÷±‚
+#pragma region π‰¡÷±‚;
 class Feeding : public State< Cat_Master>
 {
 private:
-	enum Coin_Fluctuation_rate
-	{
-		fall,
-		up,
-		keep
-	};
 	Feeding() {}
 
 	//copy ctor and assignment should be private
@@ -94,12 +82,6 @@ public:
 class Cleaning : public State< Cat_Master>
 {
 private:
-	enum Coin_Fluctuation_rate
-	{
-		fall,
-		up,
-		keep
-	};
 	Cleaning() {}
 
 	//copy ctor and assignment should be private

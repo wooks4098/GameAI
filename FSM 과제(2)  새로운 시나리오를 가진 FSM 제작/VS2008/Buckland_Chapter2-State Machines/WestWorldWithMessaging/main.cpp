@@ -9,7 +9,8 @@
 #include "MessageDispatcher.h"
 #include "misc/ConsoleUtils.h"
 #include "EntityNames.h"
-
+#include "Cat.h"
+#include "Cat_Master.h"
 
 std::ofstream os;
 
@@ -32,17 +33,26 @@ int main()
   //create GoldCoinManager
 	GoldCoinManager* CoinManager = new GoldCoinManager(ent_Gold_Coin_Manager);
 
+	Cat* cat = new Cat(ent_Cat);
+
+	Cat_Master* cat_master = new Cat_Master(ent_Cat_Master);
+
+
   //register them with the entity manager
   EntityMgr->RegisterEntity(Bob);
   EntityMgr->RegisterEntity(Elsa);
   EntityMgr->RegisterEntity(CoinManager);
+  EntityMgr->RegisterEntity(cat);
+  EntityMgr->RegisterEntity(cat_master);
 
   //run Bob and Elsa through a few Update calls
-  for (int i=0; i<50; ++i)
+  for (int i=0; i<20; ++i)
   { 
-    Bob->Update();
+    /*Bob->Update();
     Elsa->Update();
-	CoinManager->Update();
+	CoinManager->Update();*/
+	  cat->Update();
+	  cat_master->Update();
 
     //dispatch any delayed messages
     Dispatch->DispatchDelayedMessages();
