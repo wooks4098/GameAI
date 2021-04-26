@@ -57,13 +57,13 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 	//if enough gold mined, go and put it in the bank
 	if (pMiner->PocketsFull())
 	{
-
 		//딜러한테 은행 간다는 메시지 전송
 		Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
 			pMiner->ID(),        //ID of sender
 			ent_Gold_Coin_Manager,            //ID of recipient
 			Msg_GoBank,   //the message
 			NO_ADDITIONAL_INFO);
+		
 		pMiner->GetFSM()->ChangeState(VisitBankAndDepositGold::Instance());
 		
 	}
@@ -413,15 +413,11 @@ void Deal_Coin::Execute(Miner* pMiner)
 
 	}
 
-
-	//cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "맛도 정말 좋군!";
-
 	pMiner->GetFSM()->RevertToPreviousState();
 }
 
 void Deal_Coin::Exit(Miner* pMiner)
 {
-	//cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "고마워 여보. 하던 일을 다시 하는 것이 좋겠군.";
 }
 
 

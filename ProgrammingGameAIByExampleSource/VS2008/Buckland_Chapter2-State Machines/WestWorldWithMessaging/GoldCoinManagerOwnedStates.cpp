@@ -190,8 +190,8 @@ void SellCoin::Execute(GoldCoinManager* CoinManager)
 
 void SellCoin::Exit(GoldCoinManager* CoinManager)
 {
-	SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
-	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 거래 감사합니다";
+	/*SetTextColor(FOREGROUND_BLUE | FOREGROUND_INTENSITY);
+	cout << "\n" << GetNameOfEntity(CoinManager->ID()) << ": 감사합니다 다음에 또 좋은 상품을 알려드리겠습니다";*/
 }
 
 

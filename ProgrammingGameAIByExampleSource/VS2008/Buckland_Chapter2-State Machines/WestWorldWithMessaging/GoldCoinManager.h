@@ -1,12 +1,6 @@
 #pragma once
 #include <string>
 
-//#include "BaseGameEntity.h"
-//#include "Locations.h"
-//#include "misc/ConsoleUtils.h"
-//#include "GoldCoinManagerOwnedStates.h"
-//#include "fsm/StateMachine.h"
-//#include "misc/Utils.h"
 
 #include "fsm/State.h"
 #include "BaseGameEntity.h"
