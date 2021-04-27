@@ -53,7 +53,7 @@ public:
 };
 #pragma endregion
 
-#pragma region π‰∏‘±‚
+#pragma region √Ú∏£∏‘±‚
 class Eat : public State< Cat>
 {
 private:

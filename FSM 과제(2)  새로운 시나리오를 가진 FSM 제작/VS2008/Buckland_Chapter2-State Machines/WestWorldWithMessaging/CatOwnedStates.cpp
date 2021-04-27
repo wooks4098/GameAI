@@ -109,7 +109,7 @@ bool Bread_posture::OnMessage(Cat* cat, const Telegram& msg)
 }
 #pragma endregion
 
-#pragma region π‰∏‘±‚
+#pragma region √Ú∏£∏‘±‚
 Eat* Eat::Instance()
 {
 	static Eat instance;
@@ -174,7 +174,7 @@ void Break::Execute(Cat* cat)
 	cout << "\n" << GetNameOfEntity(cat->ID()) <<
 		" : §ü≈©∂˚";
 	//¡˝ªÁ«—≈◊ π∞∞«¿ª ≤£¥Ÿ∞Ì ¿¸º€
-	Dispatch->DispatchMessage(0.1,                  //time delay
+	Dispatch->DispatchMessage(0,                  //time delay
 		cat->ID(),           //sender ID
 		ent_Cat_Master,           //receiver ID
 		Msg_Break,        //msg  Msg_Deal

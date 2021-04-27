@@ -16,8 +16,6 @@ private:
 	//an instance of the state machine class
 	StateMachine<Cat>* m_pStateMachine;
 
-	//location_type   m_Location;
-
 public:
 
 	Cat(int id) :

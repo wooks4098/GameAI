@@ -124,7 +124,7 @@ void Feeding::Execute(Cat_Master* catMaster)
 	SetTextColor(FOREGROUND_GREEN | FOREGROUND_INTENSITY);
 	cout << "\n" << GetNameOfEntity(catMaster->ID()) <<
 		" : Ãò¸£ ¸ÔÀÚ";
-	Dispatch->DispatchMessage(0.1,                  //time delay
+	Dispatch->DispatchMessage(0,                  //time delay
 		catMaster->ID(),           //sender ID
 		ent_Cat,           //receiver ID
 		Msg_Eat,        //msg  Msg_Deal
